@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+int main(int argc, char *argv[]) {
+	int i,n1,n2,n,cd;
+	cout<<"\n\t\tNUMEROS PRIMOS QUE EXISTEN ENTRE N1 Y N2"<<endl;
+	do{
+		cout<<"\n\tIngrese N1: ";
+		cin>>n1;
+	} while(n1<=0);
+	do{
+		cout<<"\tIngrese N2: ";
+		cin>>n2;
+	} while(n2<=0);
+	i=1;
+	n=n1+1;
+	cd=0;
+	cout<<"\n\tLos numeros primos entre "<<n1<<" y "<<n2<<" son: ";
+	while(n<n2){
+		for(i=1;i<=n;i++){
+			if(n%i ==0){
+				cd=cd+1;
+			}
+		}
+	if(cd==2)
+		cout<<n<<" ";
+	n++;
+	cd=0;
+	}
+	return 0;
+}
+

@@ -1,0 +1,49 @@
+#include "complementos.h"
+
+void leerValores(int &D,int &d);
+int calCociente(int D,int d);
+int calResiduo(int D,int d);
+void reporte(int cociente,int residuo);
+
+int main(int argc, char *argv[]) {
+	int D,d,cociente,residuo;
+	char resp;
+	do{
+		system("cls");
+		leerValores(D,d);
+		cociente=calCociente(D,d);
+		residuo=calResiduo(D,d);
+		reporte(cociente,residuo);
+		resp=continuar();
+	} while(resp=='s' || resp=='S');
+	return 0;
+}
+
+void leerValores(int &D,int &d){
+	cout<<"Ingresar el dividendo: ";
+	cin>>D;
+	cout<<"Ingresar el divisor: ";
+	cin>>d;
+}
+int calCociente(int D,int d){
+	if(D<d)
+		return 0;
+	else{
+		if(d>0)
+			return calCociente(D-d,d)+1;
+		else{
+			d=-d;
+			return -calCociente(D-d,d);
+		}
+	}
+}
+int calResiduo(int D,int d){
+	if(D<d)
+		return D;
+	else
+		return calResiduo(D-d,d);
+}
+void reporte(int cociente,int residuo){
+	cout<<"El cociente de la division es: "<<cociente<<endl;
+	cout<<"El residuo de la division es: "<<residuo<<endl;
+}

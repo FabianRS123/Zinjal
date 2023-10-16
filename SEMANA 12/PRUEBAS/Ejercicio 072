@@ -1,0 +1,165 @@
+#include <iostream>
+#include <string.h>
+#include <cstdlib>
+#include <stdio.h>
+using namespace std;
+#define MAX 100
+void numeroDatos(int &n);
+int busqueda(char codigo[][60],char nombre[][20],float saldo[],int n);
+void ingresoDatos(char codigo[][60],char nombre[][60],float saldo[],int n);
+void crearCuenta(char codigo[][60],char nombre[][60],float saldo[],int &n);
+void consultarSaldo(char codigo[][60],char nombre[][60],float saldo[],int n);
+void depositarSaldo(char codigo[][60],char nombre[][60],float saldo[],int n);
+void retirarSaldo(char codigo[][60],char nombre[][60],float saldo[],int n);
+void reporteDatos(char codigo[][60], char nombre[][60],float saldo[], int n);
+void mostrarCuentas(char codigo[][60],char nombre[][60],float saldo[],int n);
+int main(int argc, char *argv[]) {
+	int n,opcion;
+	char codigo[MAX][60],nombre[MAX][60]; 
+	float saldo[MAX];
+	system("cls");
+	cout<<"\n\t\t\t\tIngresamos Datos de Clientes de un Banco"<<endl;
+	numeroDatos(n);
+	ingresoDatos(codigo,nombre,saldo,n);
+	do{
+		system ("cls");
+		cout<<"\n\t\t\t\t\t\tMENU DEL BANCO"<<endl;
+		cout<<"\n\t\t[1] Crear nueva cuenta"<<endl;
+		cout<<"\n\t\t[2] Consultar saldo"<<endl;
+		cout<<"\n\t\t[3] Depositar saldo"<<endl;
+		cout<<"\n\t\t[4] Retirar Saldo"<<endl;
+		cout<<"\n\t\t[5] Mostrar todas las cuentas"<<endl;
+		cout<<"\n\t\t[6] Salir"<<endl;
+		cout<<"\n\t\t\tIngrese opcion (1-6): ";
+		cin>>opcion;
+		cin.get();
+		switch(opcion){
+		case 1: crearCuenta(codigo,nombre,saldo,n); break;
+		case 2: consultarSaldo(codigo,nombre,saldo,n); break;
+		case 3: depositarSaldo(codigo,nombre,saldo,n); break;
+		case 4: retirarSaldo(codigo,nombre,saldo,n); break;
+		case 5: mostrarCuentas(codigo,nombre,saldo,n); break;
+		}
+	} while(opcion!=6);
+	return 0;
+}
+void numeroDatos(int &n){
+	do{
+		cout<<"\n\t\tIngrese el total de clientes: "; 
+		cin>>n;
+		if(n<=0)
+			cout<<"\n\t\t\tLa cantidad de clientes debe ser un numero entero positivo"<<endl;
+	} while(n<=0);
+}
+int busqueda(char codigo[][60],int n,char nom[]){
+	int i;
+	for(i=0;i<n;i++){
+		if (strcmp(codigo[i],nom)==0)
+			return i;
+	}
+	return -1;
+}
+void ingresoDatos(char codigo[][60],char nombre[][60],float saldo[],int n){
+	int i;
+	for (i=0;i<n;i++){
+		cout<<"\n\t\t\tIngrese datos del cliente "<<i+1<<" : "<<endl;
+		cin.get ();
+		cout<<"\n\t\tIngrese su nombre: ";
+		cin.getline(nombre[i],60);
+		cout<<"\n\t\tIngrese su codigo: ";
+		cin.getline(codigo[i],60);
+		do{
+			cout<<"\n\t\tIngrese su saldo: ";
+			cin>>saldo[i];
+		} while(saldo[i]<0);
+	}
+}
+void crearCuenta(char codigo[][60],char nombre[][60],float saldo[],int &n){
+	cout<<"\n\t\tIngrese datos del nuevo cliente"<<endl;
+	cout<<"\n\t\tIngrese su nombre: ";
+	cin.getline(nombre[n],60);
+	cout<<"\n\t\tIngrese su codigo: ";
+	cin.getline(codigo[n],60);
+	cout<<"\n\t\tIngrese su saldo: ";
+	cin>>saldo[n];
+	n++;
+}
+void consultarSaldo(char codigo[][60],char nombre[][60],float saldo[],int n){
+	char nom[60];
+	int p;
+	system("cls");
+	cout<<"\n\t\tIngrese codigo del cliente: ";
+	cin>>nom;
+	p=busqueda(codigo,n,nom);
+	if (p!=-1){
+		cout<<"\n\t\t\tDatos del Cliente"<<endl;
+		cout<<"\n\t\t\tCodigo: "<<codigo[p]<<endl;
+		cout<<"\n\t\t\tNombre: "<<nombre[p]<<endl;
+		cin.get();
+		cout<<"\n\t\t\tEL Saldo del Cliente es: "<<saldo[p]<<endl;
+	}
+	else
+		cout<<"\n\t\tEl codigo no se encuentra"<<endl;
+	cout<<endl;
+	system("pause");
+}
+void depositarSaldo(char codigo[][60],char nombre[][60],float saldo[],int n){
+	char  nom[60];
+	float deposito;
+	int p;
+	system("cls");
+	cout<<"\n\t\tIngrese codigo del cliente: ";
+	cin>>nom;
+	p=busqueda(codigo,n,nom);
+	if (p!=-1){
+		cout<<"\n\t\t\tDatos del Cliente"<<endl;
+		cout<<"\n\t\t\tCodigo: "<<codigo[p]<<endl;
+		cout<<"\n\t\t\tNombre: "<<nombre[p]<<endl;
+		cin.get();
+		cout<<"\n\t\t\tSaldo: "<<saldo[p]<<endl;
+		cout<<"\n\t\t\tIngrese cuanto de saldo depositara: ";
+		cin>>deposito;
+		saldo[p]=saldo[p]+deposito;
+		cout<<"\n\t\t\tEL saldo nuevo es: "<<saldo[p]<<endl;
+	}
+	else
+		cout<<"\n\t\t\tEl codigo no se encuentra"<<endl;
+	cout<<endl;
+	system("pause");
+}
+void retirarSaldo(char codigo[][60],char nombre[][60],float saldo[],int n){
+	char  nom[60];
+	float retiro;
+	int p;
+	system("cls");
+	cout<<"\n\t\tIngrese codigo del cliente: ";
+	cin>>nom;
+	p=busqueda(codigo,n,nom);
+	if (p!=-1){
+		cout<<"\n\t\t\tDatos del Cliente"<<endl;
+		cout<<"\n\t\t\tCodigo: "<<codigo[p]<<endl;
+		cout<<"\n\t\t\tNombre: "<<nombre[p]<<endl;
+		cin.get();
+		cout<<"\n\t\t\tSaldo: "<<saldo[p]<<endl;
+		cout<<"\n\t\t\tIngrese cuanto de saldo retirara: ";
+		cin>>retiro;
+		saldo[p]=saldo[p]-retiro;
+		cout<<"\n\t\tEl saldo nuevo es: "<<saldo[p]<<endl;
+	}
+	else
+		cout<<"\n\t\tEl codigo no se encuentra"<<endl;
+	cout<<endl;
+	system("pause");
+}
+void reporteDatos(char codigo[][60],char nombre[][60],float saldo[], int n){
+	int i;
+	for (i=0; i<n; i++)
+		cout<<"\n\t\t\t"<<nombre[i]<<" , "<<codigo[i]<<" , "<<saldo[i]<<endl;
+}
+void mostrarCuentas(char codigo[][60],char nombre[][60],float saldo[],int n){
+	system("cls");
+	cout<<"\n\t\t\tDatos de Todas las Personas: "<<endl;
+	reporteDatos(codigo,nombre,saldo,n);
+	cout<<endl;
+	system("pause");
+}

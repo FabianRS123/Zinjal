@@ -1,0 +1,113 @@
+#include "biblioteca.h"
+struct fraccion{
+	int num;
+	int den;
+};
+void numeroDatitos(int &);
+void reporteFraccion(fraccion v[],int);
+void ingresoDatos(fraccion v[],float v1[],int);
+void sumaFraccion(fraccion v[],int n,float v1[],int &,int &);
+void simplificacion(int &,int &);
+int main(int argc, char *argv[]) {
+	fraccion v[60];
+	int n,nu,de;
+	float v1[60];
+	char op;
+	do{
+		system("cls");
+		cout<<"\n\t\t\t\t\t\t\tSumamos Fracciones"<<endl;
+		numeroDatitos(n);
+		ingresoDatos(v,v1,n);
+		cout<<"\n\t\tReportamos las fracciones en suma"<<endl;
+		reporteFraccion(v,n);
+		cout<<endl;
+		sumaFraccion(v,n,v1,nu,de);
+		cout<<"\n\t\tLa suma de las fracciones es: "<<nu<<"/"<<de<<endl;
+		simplificacion(nu,de);
+		cout<<"\n\t\tMostramos la suma de fracciones simplificada:"<<"\t"<<nu<<"/"<<de<<endl;
+		op=respuesta();
+	} while(op=='s' || op=='S');
+	return 0;
+}
+void numeroDatitos(int &n){
+	do{
+		cout<<"\n\t\tIngrese el numero de fracciones: ";
+		n=leerEntero();
+		if(n<=0)
+			cout<<"\n\t\t\tEl numero fracciones debe ser un numero positivo"<<endl;
+	} while(n<=0);
+}
+void reporteFraccion(fraccion v[],int n){
+	for(int i=0;i<n;i++){
+		if(i==0)
+			cout<<"\n\t\t\t\t"<<v[i].num<<"/"<<v[i].den;
+		else
+			cout<<" + "<<v[i].num<<"/"<<v[i].den;
+	}
+}
+void ingresoDatos(fraccion v[],float v1[],int n){
+	for(int i=0;i<n;i++){
+		cout<<"\n\t\tIngrese Datos de la Fracción Numero "<<i+1<<endl;
+		do{
+			cout<<"\n\t\t\tIngrese el numerador: ";
+			v[i].num=leerEntero();
+			if(v[i].num<0)
+				cout<<"\n\t\t\t\tEl numerador debe ser positivo o 0"<<endl;
+		} while(v[i].num<0);
+		do{
+			cout<<"\n\t\t\tIngrese el denominador: ";
+			v[i].den=leerEntero();
+			v1[i]=v[i].den;
+			if(v[i].den<0)
+				cout<<"\n\t\t\t\tEl denominador debe ser positivo"<<endl;
+			if(v[i].den==0)
+				cout<<"\n\t\t\t\tSi el denominador es 0 la fracción seria indefinida, ingrese otra vez"<<endl;
+		} while(v[i].den<=0);
+	}
+}
+void sumaFraccion(fraccion v[],int n,float v1[],int &nu,int &de){
+	int i,k,j,a,s,may;
+	float p;
+	may=v[0].den;
+	for(i=0;i<n;i++)
+		if(v[i].den>may)
+			may=v[i].den;
+	k=2;
+	p=1;
+	while(k<=may){
+		for(i=0;i<n;i++){
+			if(v[i].den%k==0){
+				p=p*k;
+				break;
+		    }
+		}
+		for(i=0;i<n;i++){
+			if(v[i].den%k==0)
+				v[i].den=v[i].den/k;
+		}
+		a=k;
+		k++;
+		for(i=0;i<n;i++)
+			if(v[i].den%a==0){
+				k--;
+				break;
+		}
+	}
+	de=p;
+	s=0;
+	for(j=0;j<n;j++){
+		s=s+((de/v1[j])*v[j].num);
+	}
+	nu=s;
+}
+void simplificacion(int &nu,int &de){
+	int i=2;
+	while(i<=nu && i<=de){
+		if(nu%i==0 && de%i==0){
+			nu=nu/i;
+		    de=de/i;
+		}
+		else
+		   i++;
+	}
+}
