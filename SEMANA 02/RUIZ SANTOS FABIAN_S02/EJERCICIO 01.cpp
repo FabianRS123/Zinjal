@@ -11,6 +11,7 @@ int main(int argc, char *argv[]) {
 		cout<<a<<" si es divisible por "<<b<<endl;
 	else
 		cout<<a<<" no es divisible por "<<b<<endl;
+		cout<<"hola mundo :v"<<endl;
 	return 0;
 }
 
